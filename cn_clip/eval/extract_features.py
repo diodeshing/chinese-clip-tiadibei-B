@@ -176,8 +176,10 @@ if __name__ == "__main__":
                     texts = texts.cuda(args.gpu, non_blocking=True)
                     text_features = model(None, texts)
                     text_features /= text_features.norm(dim=-1, keepdim=True)
-                    for text_id, text_feature in zip(text_ids.tolist(), text_features.tolist()):
-                        fout.write("{}\n".format(json.dumps({"text_id": text_id, "feature": text_feature})))
+                    # print(text_ids,type(text_ids))
+                    """text_ids.tolist()"""
+                    for text_id, text_feature in zip(text_ids, text_features.tolist()):
+                        fout.write("{}\n".format(json.dumps({"text_id": text_id.tolist(), "feature": text_feature})))
                         write_cnt += 1
         print('{} text features are stored in {}'.format(write_cnt, args.text_feat_output_path))
 

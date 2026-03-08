@@ -260,7 +260,7 @@ if __name__ == "__main__":
     print(logits.size())
     output_dict = {
         "model_name": "CN-CLIP-" + args.vision_model,
-        "dataset_name": args.dataset,
+        "datasets": args.dataset,
         "num_trainable_params": 0,
         "num_params": sum(x.numel() for x in model.parameters()),
         "num_visual_params": sum(x.numel() for x in model.visual.parameters()),

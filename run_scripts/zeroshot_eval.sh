@@ -2,7 +2,7 @@
 
 # Usage: see example script below.
 # bash run_scripts/zeroshot_eval.sh 0 \
-#     ${path_to_dataset} ${dataset_name} \
+#     ${path_to_dataset} ${datasets} \
 #     ViT-B-16 RoBERTa-wwm-ext-base-chinese \
 #     ${ckpt_path}
 

@@ -79,7 +79,7 @@ if __name__ == '__main__':
         print(f"  {name}: {val}")
 
     preprocess = image_transform(_MODEL_INFO[args.model_arch]['input_resolution'])
-    image = torch.vstack([preprocess(Image.open("examples/pokemon.jpeg")).unsqueeze(0)] * args.batch_size)
+    image = torch.vstack([preprocess(Image.open("examples/4.jpg")).unsqueeze(0)] * args.batch_size)
     text = torch.vstack([clip.tokenize(["杰尼龟"], context_length=args.context_length)] * args.batch_size)
     if args.device == "cuda":
         image = image.cuda()

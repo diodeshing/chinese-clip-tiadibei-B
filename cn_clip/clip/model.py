@@ -2,7 +2,6 @@ from collections import OrderedDict
 from typing import Tuple, Union
 from itertools import repeat
 import collections.abc
-
 import math
 import logging
 import numpy as np

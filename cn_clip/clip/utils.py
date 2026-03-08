@@ -48,6 +48,7 @@ _MODEL_INFO = {
 
 def _download(url: str, root: str):
     os.makedirs(root, exist_ok=True)
+    print(root)
     filename = os.path.basename(url)
 
     download_target = os.path.join(root, filename)

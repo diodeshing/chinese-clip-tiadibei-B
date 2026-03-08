@@ -1,9 +1,9 @@
 #!/usr/bin/env
 
 # Guide:
-# This script supports distributed training on multi-gpu workers (as well as single-worker training). 
-# Please set the options below according to the comments. 
-# For multi-gpu workers training, these options should be manually set for each worker. 
+# This script supports distributed training on multi-gpu workers (as well as single-worker training).
+# Please set the options below according to the comments.
+# For multi-gpu workers training, these options should be manually set for each worker.
 # After setting the options, please run the script on each worker.
 # Command: bash run_scripts/muge_finetune_vit-b-16_rbt-base.sh ${DATAPATH}
 
@@ -16,27 +16,28 @@ export MASTER_ADDR=0.0.0.0
 # The port for communication
 export MASTER_PORT=8514
 # The rank of this worker, should be in {0, ..., WORKER_CNT-1}, for single-worker training, please set to 0
-export RANK=0 
+export RANK=0
 
 export PYTHONPATH=${PYTHONPATH}:`pwd`/cn_clip/
 
-DATAPATH=${1}
+DATAPATH=datasets
 
 # data options
-train_data=datasets/one/lmdb/train
-val_data=datasets/one/lmdb/trainvalid # if val_data is not specified, the validation will be automatically disabled
+train_data=datasets/tiandijinghua_ys/lmdb/train
+val_data=datasets/tiandijinghua_ys/lmdb/valid # if val_data is not specified, the validation will be automatically disabled
 
 # restore options
-resume=clip_cn_rn50.pt # or specify your customed ckpt path to resume
+# resume=clip_cn_rn50.pt
+resume=clip_cn_vit-l-14-336.pt # or specify your customed ckpt path to resume
 reset_data_offset="--reset-data-offset"
 reset_optimizer="--reset-optimizer"
 # reset_optimizer=""
 
 # output options
 output_base_dir=experiments/
-name=muge_finetune_vit-b-16_roberta-base_bs128_8gpu
+name=tiandijinghua
 save_step_frequency=999999 # disable it
-save_epoch_frequency=1
+save_epoch_frequency=10
 log_interval=1
 report_training_batch_acc="--report-training-batch-acc"
 # report_training_batch_acc=""
@@ -44,18 +45,17 @@ report_training_batch_acc="--report-training-batch-acc"
 # training hyper-params
 context_length=52
 warmup=100
-batch_size=128
-valid_batch_size=128
+batch_size=8
+valid_batch_size=64
 accum_freq=1
-lr=5e-5
+lr=5e-7
 wd=0.001
-max_epochs=3 # or you can alternatively specify --max-steps
-valid_step_interval=150
+max_epochs=10 # or you can alternatively specify --max-steps
+valid_step_interval=50
 valid_epoch_interval=1
-vision_model=RN50
+vision_model=ViT-L-14-336
 text_model=RoBERTa-wwm-ext-base-chinese
 use_augment="--use-augment"
-# use_augment=""
 
 python3 -m torch.distributed.launch --use_env --nproc_per_node=${GPUS_PER_NODE} --nnodes=${WORKER_CNT} --node_rank=${RANK} \
           --master_addr=${MASTER_ADDR} --master_port=${MASTER_PORT} cn_clip/training/main.py \
@@ -82,4 +82,6 @@ python3 -m torch.distributed.launch --use_env --nproc_per_node=${GPUS_PER_NODE} 
           --max-epochs=${max_epochs} \
           --vision-model=${vision_model} \
           ${use_augment} \
-          --text-model=${text_model}
+          --text-model=${text_model} \
+          --grad-checkpointing \
+          --freeze-vision
