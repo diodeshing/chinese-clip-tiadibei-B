@@ -1,5 +1,5 @@
 
-# 泰迪杯B题代码使用简易教程（参考Chinese-CLIP的README.md文件）
+# 2024年泰迪杯B题代码使用简易教程（参考Chinese-CLIP的README.md文件）
 ## 安装要求
 开始本项目前，需先检查是否满足下列环境配置要求:
 
@@ -308,3 +308,4 @@ python -u cn_clip/eval/make_topk_predictions_tr.py \
 ```
 ## 我们非常感激这个开源项目，为我们提供了宝贵的资源和灵感，让我们的比赛得以顺利进行和完善。非常感谢！！
 ![img_2.png](img_2.png)
+
