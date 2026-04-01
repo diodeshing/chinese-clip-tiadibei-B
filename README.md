@@ -16,6 +16,8 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 
+
+
 ## 数据准备
 
 ### 放置数据
@@ -101,6 +103,8 @@ ${DATAPATH}
             └── test
 ```
 
+
+
 ## 模型训练
 
 #### 1.根据需求修改run_scripts/tiandijinghua.sh中的参数，使用clip_cn_vit-l-14-336.pt预训练模型进行finetune.
@@ -156,9 +160,12 @@ bash run_scripts/tiandijinghua.sh
 2022-12-11,20:42:47 | INFO | Rank 0 | Validation Result (epoch 1 @ 150 steps) | Valid Loss: 0.502810 | Image2Text Acc: 84.95 | Text2Image Acc: 84.26 | logit_scale: 4.605 | Valid Batch Size: 128
 ```
 
+
+
 ## 预测
 
 ### 图文特征提取
+
 
 ### 项目提供的。
 ```bash
@@ -190,6 +197,8 @@ python -u cn_clip/eval/extract_features.py \
 ```
 {"text_id": 248816, "feature": [0.1314, ..., 0.0018, -0.0002]}
 ```
+
+
 ### 适合比赛的（根据环境修改img-batch-size),替换resume中的模型得到不同结果。
 
 ### 1.处理附件2的数据。
@@ -230,6 +239,8 @@ python -u cn_clip/eval/extract_features.py \
     --vision-model=ViT-L-14-336 \
     --text-model=RoBERTa-wwm-ext-base-chinese 
 ```
+
+
 ### KNN检索，计算文到图、图到文检索的top-k召回结果。
 
 ### 项目提供的。
@@ -262,6 +273,7 @@ python -u cn_clip/eval/make_topk_predictions_tr.py \
 {"image_id": 977856234, "text_ids": [156914, 157914, 158914, 155914, 156179, 158907, 157179, 154179, 154914, 154723]}
 ```
 
+
 ### 适合比赛的，使用不同模型得到的特征，得到不同预测结果。
 
 #### 1.对于文到图检索，请运行以下命令：
@@ -286,13 +298,16 @@ python -u cn_clip/eval/make_topk_predictions_tr.py \
     --output="../../datasets/res2/test_predictions_tr.jsonl"
 ```
 
+
 ## 模型融合
 
 ### 依次运行result.ipynb中的代码，完成对文搜图和图搜文的结果融合。取二十个结果中的前五个。
 
+
 ## 得到结果
 
 ### 依次运行result.ipynb中之后的代码，使用原始id替换重命名的id，完成结果文件的输出，
+
 
 # 致谢+引用
 
